@@ -1,0 +1,39 @@
+﻿@model Rolepp.Models.Note
+
+<h2>Create Note</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="NoteCode"></label>
+        <input asp-for="NoteCode" class="form-control" />
+        <span asp-validation-for="NoteCode" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CreateName"></label>
+        <input asp-for="CreateName" class="form-control" />
+        <span asp-validation-for="CreateName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Customer"></label>
+        <input asp-for="Customer" class="form-control" />
+        <span asp-validation-for="Customer" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AddressCustomer"></label>
+        <input asp-for="AddressCustomer" class="form-control" />
+        <span asp-validation-for="AddressCustomer" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Reason"></label>
+        <input asp-for="Reason" class="form-control" />
+        <span asp-validation-for="Reason" class="text-danger"></span>
+    </div>
+
+
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

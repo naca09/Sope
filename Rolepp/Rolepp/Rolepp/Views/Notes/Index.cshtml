@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Rolepp.Models.Note>
+
+<h2>Notes Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NoteCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoteCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @if (User.IsInRole("Accountant") && item.Status == 1)
+                    {
+                        <button onclick="updateStatus(@item.NoteId, 2)" style="color:green">Approved</button>
+                    }
+                    else if (User.IsInRole("CFO") && item.Status == 2)
+                    {
+                        <button onclick="updateStatus(@item.NoteId, 3)" style="color:green">Approve</button>
+                        <button onclick="updateStatus(@item.NoteId, 4)" style="color:red">Disapprove</button>
+                    }
+                    else if (item.Status == 3)
+                    {
+                        <span style="color: green">Approved</span>
+                    }
+                    else if (item.Status == 4)
+                    {
+                        <span style="color: red">Disapproved</span>
+                        @if (User.IsInRole("CFO"))
+                        {
+                            <button onclick="deleteNote(@item.NoteId)">Delete</button>
+                        }
+                    }
+                    else
+                    {
+                        <span style="color:orange">Don't have role to update this!</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function updateStatus(noteId, newStatus) {
+        $.ajax({
+            url: '/Notes/UpdateStatusAjax/' + noteId + '?newStatus=' + newStatus,
+            type: 'POST',
+            success: function (data) {
+                console.log('Status updated successfully');
+                location.reload();
+            },
+            error: function () {
+                console.log('Error updating status');
+            }
+        });
+    }
+
+    function deleteNote(noteId) {
+        $.ajax({
+            url: '/Notes/Delete/' + noteId,
+            type: 'POST',
+            success: function (data) {
+                console.log('Note deleted successfully');
+                location.reload();
+            },
+            error: function () {
+                console.log('Error deleting note');
+            }
+        });
+    }
+</script>

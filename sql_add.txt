@@ -1,0 +1,10 @@
+CREATE TABLE Notes
+(
+    NoteId INT PRIMARY KEY IDENTITY(1, 1),
+    NoteCode NVARCHAR(255) NOT NULL,
+    CreateName NVARCHAR(MAX),
+    Customer NVARCHAR(MAX),
+    AddressCustomer NVARCHAR(MAX),
+    Reason NVARCHAR(MAX),
+    Status INT CONSTRAINT CK_Notes_Status CHECK (Status IN (1, 2, 3, 4)) DEFAULT 1
+);
